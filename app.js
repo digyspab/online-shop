@@ -5,14 +5,16 @@ const rootDir = require('./util/path');
 
 const app = express();
 
-app.use(boydParser.urlencoded());
+app.use(boydParser.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+app.set('views', 'views');
 
-const adminRoutes = require('./routes/admin');
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-app.use('/admin', adminRoutes);
+app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
 
