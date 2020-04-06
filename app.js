@@ -11,10 +11,10 @@ app.set('views', 'views');
 app.use(boydParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const adminData = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-app.use('/admin', adminData.routes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 
