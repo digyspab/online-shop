@@ -2,10 +2,13 @@ const path = require('path');
 const express = require('express');
 const boydParser = require('body-parser');
 const rootDir = require('./util/path');
+const expressHbs = require('express-handlebars');
 
 const app = express();
 
-app.set('view engine', 'pug');
+app.engine('handlebars', expressHbs());
+app.set('view engine', 'handlebars');
+// app.set('view engine', 'pug');
 app.set('views', 'views');
 
 app.use(boydParser.urlencoded({extended: true}));
