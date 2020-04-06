@@ -1,8 +1,7 @@
 const path = require('path');
 const express = require('express');
 const boydParser = require('body-parser');
-const rootDir = require('./util/path');
-
+const errorController = require('./controllers/error');
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -19,11 +18,7 @@ app.use(shopRoutes);
 
 
 // page not found routes
-app.use((req, res, next) => {
-    res.status(404).render('404', {
-        pageTitle: 'Page Not Found',
-    });
-});
+app.use(errorController.get404);
 
 app.listen(3000, (err) => {
     console.log(`Connected to port${3000}`);
