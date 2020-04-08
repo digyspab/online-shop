@@ -28,4 +28,11 @@ router.get('/products', adminController.getProducts);
  */
 router.post('/add-product', adminController.postAddProduct);
 
+/**
+ * @param /admin/edit-product
+ * @description admin route for save product
+ * @method GET
+ */
+router.get('/edit-product/:productId', adminController.getEditProduct);
+
 module.exports = router;

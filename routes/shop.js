@@ -35,6 +35,13 @@ router.get('/products/:productId', shopController.getProduct);
 router.get('/cart', shopController.getCart);
 
 /**
+ * @param /cart
+ * @description add to cart page
+ * @method POST
+ */
+router.post('/cart', shopController.postCart);
+
+/**
  * @param /orders
  * @description all orders page
  * @method GET
