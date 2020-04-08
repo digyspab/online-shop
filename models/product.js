@@ -39,8 +39,9 @@ function uuidv4(str) {
  * @description this Product class get informatio from body
  */
 module.exports = class Product {
-  constructor(title, imageUrl, description, price) {
-    this.title = title;
+  constructor(id, title, imageUrl, description, price) {
+    this.id = id,
+      this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
     this.price = price;
@@ -48,15 +49,29 @@ module.exports = class Product {
 
   /**
    * This method is save data in file
+   * @description this method is both for edit and save 
    */
   save() {
-    this.id = uuidv4('xxxxxxx0013-xxxx-4xxxxx-yxxx-xxxxyyyxxxxxx');
-
     getProductsFromFile(products => {
-      products.push(this);
-      fs.writeFile(p, JSON.stringify(products), err => {
-        console.log(err);
-      });
+
+      // Edit if id is present
+      if (this.id) {
+        const existingProductIndex = products.findIndex(prod => prod.id === this.id);
+        const updateProducts = [...products];
+        updateProducts[existingProductIndex] = this;
+
+        fs.writeFile(p, JSON.stringify(updateProducts), err => {
+          console.log(err);
+        });
+
+      // Add if id is not present
+      } else {
+        this.id = uuidv4('xxxxxxx0013-xxxx-4xxxxx-yxxx-xxxxyyyxxxxxx');
+        products.push(this);
+        fs.writeFile(p, JSON.stringify(products), err => {
+          console.log(err);
+        });
+      }
     });
   }
 
