@@ -42,4 +42,11 @@ router.get('/edit-product/:productId', adminController.getEditProduct);
  */
 router.post('/edit-product/', adminController.postEditProduct);
 
+/**
+ * @param /admin/delete-product
+ * @description admin route for save product
+ * @method POST
+ */
+router.post('/delete-product/', adminController.postDeleteProduct);
+
 module.exports = router;

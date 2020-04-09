@@ -1,13 +1,1 @@
-{
-    "products": [
-        {
-            "id": "0d38c200013-0725-484c60-aa7d-b94b88a475af9",
-            "qty": 2
-        },
-        {
-            "id": "19cb23d9-4396-4bff-a117-c1d41c29c56b",
-            "qty": 3
-        }
-    ],
-    "totalPrice": 5500
-}
+{"products":[{"id":"0d38c200013-0725-484c60-aa7d-b94b88a475af9","qty":3}],"totalPrice":6000}

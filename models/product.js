@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const Cart = require('./cart');
 
 /**
  * @description this variable set item to data folder in product.json file
@@ -40,8 +41,8 @@ function uuidv4(str) {
  */
 module.exports = class Product {
   constructor(id, title, imageUrl, description, price) {
-    this.id = id,
-      this.title = title;
+    this.id = id;
+    this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
     this.price = price;
@@ -53,18 +54,15 @@ module.exports = class Product {
    */
   save() {
     getProductsFromFile(products => {
-
-      // Edit if id is present
       if (this.id) {
-        const existingProductIndex = products.findIndex(prod => prod.id === this.id);
-        const updateProducts = [...products];
-        updateProducts[existingProductIndex] = this;
-
-        fs.writeFile(p, JSON.stringify(updateProducts), err => {
+        const existingProductIndex = products.findIndex(
+          prod => prod.id === this.id
+        );
+        const updatedProducts = [...products];
+        updatedProducts[existingProductIndex] = this;
+        fs.writeFile(p, JSON.stringify(updatedProducts), err => {
           console.log(err);
         });
-
-      // Add if id is not present
       } else {
         this.id = uuidv4('xxxxxxx0013-xxxx-4xxxxx-yxxx-xxxxyyyxxxxxx');
         products.push(this);
@@ -72,6 +70,22 @@ module.exports = class Product {
           console.log(err);
         });
       }
+    });
+  }
+
+  /**
+   * This method delte product
+   */
+  static deleteById(id) {
+    getProductsFromFile(products => {
+      const product = products.find(prod => prod.id === id);
+      const updatedProducts = products.filter(prod => prod.id !== id);
+      fs.writeFile(p, JSON.stringify(updatedProducts), err => {
+        if (!err) {
+          console.log(products.title);
+          Cart.deleteProduct(id, product.price);
+        }
+      });
     });
   }
 
