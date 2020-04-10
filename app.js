@@ -5,6 +5,10 @@ var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 const path = require('path');
 const logger = require('morgan');
+const db = require('./util/database');
+
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
 
 const errorController = require('./controllers/error');
@@ -25,9 +29,6 @@ app.use(session({
 
 // Add Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
-
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
 
 app.use(logger('dev'));
 app.use('/admin', adminRoutes);
