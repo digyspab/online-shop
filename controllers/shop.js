@@ -90,6 +90,20 @@ exports.postCart = (req, res, next) => {
 
 
 /**
+ * @param /cart-delete-item
+ * @description this controller is for shpop.js routes file
+ * @method POST
+ */
+exports.postCartDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    Product.findById(prodId, product => {
+        Cart.deleteProduct(prodId, product.price);
+        res.redirect('/cart');
+    });
+};
+
+
+/**
  * @param /orders
  * @description this controller is for shpop.js routes file
  * @method GET

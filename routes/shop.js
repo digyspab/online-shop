@@ -42,6 +42,13 @@ router.get('/cart', shopController.getCart);
 router.post('/cart', shopController.postCart);
 
 /**
+ * @param /cart-delete-item
+ * @description payment page
+ * @method POST
+ */
+router.post('/cart-delete-item', shopController.postCartDeleteProduct);
+
+/**
  * @param /orders
  * @description all orders page
  * @method GET
