@@ -6,6 +6,9 @@ const path = require('path');
 const logger = require('morgan');
 const sequelize = require('./util/database');
 
+const Product = require('./models/product');
+const User = require('./models/user');
+
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
@@ -35,8 +38,12 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
+// Association to database or relation
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' }); // OR
+User.hasMany(Product);
+
 // Make table
-sequelize.sync()
+sequelize.sync({ force: true }) // force: true, is overirde table info use only in development
   .then(result => {
     app.listen(3000);
   }).catch(err => {
