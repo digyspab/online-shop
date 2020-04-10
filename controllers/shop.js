@@ -7,17 +7,17 @@ const Cart = require('../models/cart');
  * @method GET
  */
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll()
-    .then(([rowns, fieldData]) => {
-        res.render('shop/product-list', {
-            prods: rowns,
-            pageTitle: 'All Products',
-            path: '/products'
+    Product.findAll()
+        .then(products => {
+            res.render('shop/product-list', {
+                prods: products,
+                pageTitle: 'All Products',
+                path: '/products'
+            });
+        })
+        .catch(err => {
+            console.log(err);
         });
-    })
-    .catch(err => {
-        console.log(err);
-    });
 };
 
 /**
@@ -27,11 +27,24 @@ exports.getProducts = (req, res, next) => {
  */
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;
-    Product.findById(prodId)
-        .then(([product]) => {
+
+    // Product.findAll({ where: {id: prodId}})
+    // .then(product => {
+    //     res.render('shop/product-detail', {
+    //         pageTitle: product[0].title,
+    //         product: product[0],
+    //         path: '/products',
+    //     })
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // });
+
+    Product.findByPk(prodId)
+        .then(product => {
             res.render('shop/product-detail', {
-                pageTitle: 'Product details',
-                product: product[0],
+                pageTitle: product.title,
+                product: product,
                 path: '/products',
             })
         })
@@ -46,17 +59,17 @@ exports.getProduct = (req, res, next) => {
  * @method GET
  */
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll()
-        .then(([rowns, fieldData]) => {
-            res.render('shop/index', {
-                prods: rowns,
-                pageTitle: 'Shop',
-                path: '/'
-            });
-        })
-        .catch(err => {
-            console.log(err);
+    Product.findAll()
+    .then(products => {
+        res.render('shop/index', {
+            prods: products,
+            pageTitle: 'Shop',
+            path: '/'
         });
+    })
+    .catch(err => {
+        console.log(err);
+    });
 };
 
 /**

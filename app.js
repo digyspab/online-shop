@@ -2,10 +2,9 @@ require('dotenv').config;
 const express = require('express');
 const bodyParser = require('body-parser');
 var session = require('express-session');
-var FileStore = require('session-file-store')(session);
 const path = require('path');
 const logger = require('morgan');
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -36,4 +35,11 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3000);
+// Make table
+sequelize.sync()
+  .then(result => {
+    app.listen(3000);
+  }).catch(err => {
+    console.log(err);
+  });
+
