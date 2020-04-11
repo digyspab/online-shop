@@ -66,8 +66,8 @@ Order.belongsToMany(Product, { through: OrderItem });
 
 // Make table
 sequelize
-  .sync({ force: true }) // force: true, is overirde table info use only in development
-  // .sync()
+  // .sync({ force: true }) // force: true, is overirde table info use only in development
+  .sync()
   .then(result => {
     return User.findByPk(1);
   })

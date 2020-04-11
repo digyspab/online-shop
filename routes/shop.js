@@ -56,10 +56,12 @@ router.post('/cart-delete-item', shopController.postCartDeleteProduct);
 router.get('/orders', shopController.getOrders);
 
 /**
- * @param /checkout
- * @description payment page
- * @method GET
+ * @param /create-order
+ * @description order placed
+ * @method POST
  */
-router.get('/checkout', shopController.getCheckout);
+router.post('/create-order', shopController.postOrder);
+
+
 
 module.exports = router;
