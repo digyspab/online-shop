@@ -4,7 +4,7 @@ let _db;
 
 const mongoConnect = callback => {
     MongoClient.connect(
-        // 'mongodb+srv://hyphen0013:1wN3WmUNXSOvX8h1@cluster0-3j68b.mongodb.net/shop?retryWrites=true&w=majority',
+        // 'mongodb+srv://hyphen0013:1wN3WmUNXSOvX8h1@cluster0-3j68b.mongodb.net/test?retryWrites=true&w=majority',
         'mongodb://localhost:27017/shop',
         {
              useUnifiedTopology: true,

@@ -8,6 +8,7 @@ const mongoConnect = require('./util/database').mongoConnect;
 
 const errorController = require('./controllers/error');
 const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
 const app = express();
 
@@ -39,7 +40,7 @@ app.use((req, res, next) => {
 });
 // app.use(logger('dev'));
 app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 
 app.use(errorController.get404);
