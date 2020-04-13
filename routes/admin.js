@@ -19,7 +19,7 @@ router.get('/add-product', adminController.getAddProduct);
  * @description admin route for show all product page
  * @method GET
  */
-router.get('/products', adminController.getProducts);
+// router.get('/products', adminController.getProducts);
 
 /**
  * @param /admin/add-product
@@ -33,20 +33,20 @@ router.post('/add-product', adminController.postAddProduct);
  * @description admin route for save product
  * @method GET
  */
-router.get('/edit-product/:productId', adminController.getEditProduct);
+// router.get('/edit-product/:productId', adminController.getEditProduct);
 
 /**
  * @param /admin/edit-product
  * @description admin route for save product
  * @method POST
  */
-router.post('/edit-product/', adminController.postEditProduct);
+// router.post('/edit-product/', adminController.postEditProduct);
 
 /**
  * @param /admin/delete-product
  * @description admin route for save product
  * @method POST
  */
-router.post('/delete-product/', adminController.postDeleteProduct);
+// router.post('/delete-product/', adminController.postDeleteProduct);
 
 module.exports = router;

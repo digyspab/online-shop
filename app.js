@@ -4,20 +4,10 @@ const bodyParser = require('body-parser');
 var session = require('express-session');
 const path = require('path');
 const logger = require('morgan');
-const sequelize = require('./util/database');
-
-const Product = require('./models/product');
-const User = require('./models/user');
-const CartItem = require('./models/cart-item');
-const Cart = require('./models/cart');
-const Order = require('./models/order');
-const OrderItem = require('./models/order-item');
-
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
-
+const mongoConnect = require('./util/database').mongoConnect;
 
 const errorController = require('./controllers/error');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -37,54 +27,26 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  User.findByPk(1)
-  .then(user => {
-    req.user = user;
-    next();
-  })
-  .catch(err => {
-    console.log(err);
-  });
-})
-app.use(logger('dev'));
+  // User.findByPk(1)
+  // .then(user => {
+  //   req.user = user;
+  //   next();
+  // })
+  // .catch(err => {
+  //   console.log(err);
+  // });
+  next();
+});
+// app.use(logger('dev'));
 app.use('/admin', adminRoutes);
-app.use(shopRoutes);
+// app.use(shopRoutes);
 
 
 app.use(errorController.get404);
 
-// Association to database or relation
-Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' }); // OR
-User.hasMany(Product);
-User.hasOne(Cart);
-Cart.belongsTo(User);
-Cart.belongsToMany(Product, { through: CartItem });
-Product.belongsToMany(Cart, { through: CartItem });
-Order.belongsTo(User);
-User.hasMany(Order);
-Order.belongsToMany(Product, { through: OrderItem });
-
-// Make table
-sequelize
-  // .sync({ force: true }) // force: true, is overirde table info use only in development
-  .sync()
-  .then(result => {
-    return User.findByPk(1);
-  })
-  .then(user => {
-    if(!user) {
-      return User.create({ name: 'Hyphen', email: 'hyphen@gmail.com' });
-    }
-    return user;
-  })
-  .then(user => {
-    // console.log(user);
-    return user.createCart();
-  })
-  .then(cart => {
-    app.listen(3000);
-  })
-  .catch(err => {
-    console.log(err);
+mongoConnect(() => {
+  app.listen(3000, () => {
+    console.log('Connected to port 3000');
   });
+});
 
