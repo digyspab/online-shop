@@ -5,6 +5,7 @@ var session = require('express-session');
 const path = require('path');
 const logger = require('morgan');
 const mongoConnect = require('./util/database').mongoConnect;
+const User = require('./models/user');
 
 const errorController = require('./controllers/error');
 const adminRoutes = require('./routes/admin');
@@ -28,15 +29,14 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  // User.findByPk(1)
-  // .then(user => {
-  //   req.user = user;
-  //   next();
-  // })
-  // .catch(err => {
-  //   console.log(err);
-  // });
-  next();
+  User.findById("5e988882b8dfacdd5deb2bb1")
+  .then(user => {
+    req.user = user;
+    next();
+  })
+  .catch(err => {
+    console.log(err);
+  });
 });
 // app.use(logger('dev'));
 app.use('/admin', adminRoutes);
